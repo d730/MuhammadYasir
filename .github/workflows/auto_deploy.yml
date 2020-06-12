@@ -1,0 +1,19 @@
+name: Bootcamp 2020 urdu
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Installing surge
+      run: npm install --global surge
+    - name: Deploying using surge
+      run: surge ./ deep-children.surge.sh --token ${{ secrets.SURGE_TOKEN }} 
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
